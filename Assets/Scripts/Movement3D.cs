@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Movement3D : MonoBehaviour
 {
+    [SerializeField] Animator anim;
     [SerializeField] float moveSpeed;
+    [SerializeField] float runSpeed;
     [SerializeField] float jumpHeight;
     
     [Range(1.0f, 4.0f)]
@@ -40,8 +42,13 @@ public class Movement3D : MonoBehaviour
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
+        bool isRun = Input.GetKey(KeyCode.LeftShift);
+
         Vector3 direction = (transform.right * x) + (transform.forward * z);
-        controller.Move(direction * moveSpeed * Time.deltaTime);
+        controller.Move(direction * (isRun ? runSpeed : moveSpeed) * Time.deltaTime);
+
+        anim.SetBool("isWalk", direction != Vector3.zero);
+        anim.SetBool("isRun", isRun);
     }
     void Jump()
     {

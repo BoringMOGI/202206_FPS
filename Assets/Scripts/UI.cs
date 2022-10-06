@@ -22,6 +22,7 @@ public class UI : MonoBehaviour
     }
     public void OnHit(HIT_TYPE type)
     {
+        hitAnim.Stop();
         hitAnim.Play(type == HIT_TYPE.Head ? "Hit_head" : "Hit_normal");
     }
 }
